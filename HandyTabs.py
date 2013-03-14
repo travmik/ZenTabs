@@ -9,7 +9,7 @@ def remove_from_list(p_list, view_id):
 		p_list.remove(view_id)
 
 def renew_list(p_list, view_id):
-	if get_view_by_id(view_id) is not None:
+	if get_view_by_id(view_id) is not None: 
 		if view_id in p_list:
 			p_list.append(p_list.pop(p_list.index(view_id)))
 		else:
@@ -20,7 +20,7 @@ def get_view_by_id(view_id):
 	for v in sublime.active_window().views():
 		if v.id() == view_id:
 			view = v
-			break
+			break		
 	return view
 
 class HandyTabsListener(sublime_plugin.EventListener):
@@ -44,8 +44,12 @@ class HandyTabsListener(sublime_plugin.EventListener):
 
 
 	def on_modified(self, view):
-		renew_list(self.edited_tab_ids, view.id())
-		remove_from_list(self.opened_tab_ids, view.id())
+		if view.is_dirty():
+			renew_list(self.edited_tab_ids, view.id())
+			remove_from_list(self.opened_tab_ids, view.id())
+		else:
+			renew_list(self.opened_tab_ids, view.id())
+			remove_from_list(self.edited_tab_ids, view.id())
 
 
 
@@ -77,11 +81,3 @@ class HandyTabsListener(sublime_plugin.EventListener):
 				index += 1
 			else:
 				break
-			
-
-	
-
-	
-
-
-	
