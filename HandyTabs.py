@@ -30,6 +30,7 @@ class HandyTabsListener(sublime_plugin.EventListener):
 
 	def on_close(self, view):
 		remove_from_list(self.opened_tab_ids, view.id())
+		self.printStat()
 
 	def on_activated(self, view):
 		if sublime.active_window().id() != self.window_id:
@@ -37,10 +38,12 @@ class HandyTabsListener(sublime_plugin.EventListener):
 			self.edited_tab_ids = [view.id() for view in sublime.active_window().views() if view.is_dirty() or view.is_scratch()]
 			self.window_id = sublime.active_window().id()
 		sublime.set_timeout(lambda: self.process(view.id()), 200)
+		self.printStat()
 		
 	def on_post_save(self, view):
 		remove_from_list(self.edited_tab_ids, view.id())
 		renew_list(self.opened_tab_ids, view.id())
+		self.printStat()
 
 
 	def on_modified(self, view):
@@ -51,6 +54,8 @@ class HandyTabsListener(sublime_plugin.EventListener):
 			renew_list(self.opened_tab_ids, view.id())
 			remove_from_list(self.edited_tab_ids, view.id())
 
+		self.printStat()
+
 
 
 	def process(self, view_id):
@@ -58,9 +63,6 @@ class HandyTabsListener(sublime_plugin.EventListener):
 			renew_list(self.opened_tab_ids, view_id)
 		if len(sublime.active_window().views()) - len(self.edited_tab_ids) > g_tabLimit:
 			self.close_last_tab()
-		print "u_tabs", " ".join(str(v_id) for v_id in self.edited_tab_ids)
-		print "o_tabs", " ".join(str(v_id) for v_id in self.opened_tab_ids)
-		print "w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views())
 
 	def close_last_tab(self):
 		index = 0
@@ -77,7 +79,12 @@ class HandyTabsListener(sublime_plugin.EventListener):
 				else:
 					self.edited_tab_ids.append(view_id)
 
-			if index < len(opened_tab_ids):
+			if index < len(self.opened_tab_ids):
 				index += 1
 			else:
 				break
+
+	def printStat(self):
+		print "u_tabs", " ".join(str(v_id) for v_id in self.edited_tab_ids)
+		print "o_tabs", " ".join(str(v_id) for v_id in self.opened_tab_ids)
+		print "w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views())
