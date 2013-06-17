@@ -30,7 +30,6 @@ class HandyTabsListener(sublime_plugin.EventListener):
 
 	def on_close(self, view):
 		remove_from_list(self.opened_tab_ids, view.id())
-		self.printStat()
 
 	def on_activated(self, view):
 		if sublime.active_window().id() != self.window_id:
@@ -38,12 +37,10 @@ class HandyTabsListener(sublime_plugin.EventListener):
 			self.edited_tab_ids = [view.id() for view in sublime.active_window().views() if view.is_dirty() or view.is_scratch()]
 			self.window_id = sublime.active_window().id()
 		sublime.set_timeout(lambda: self.process(view.id()), 200)
-		self.printStat()
 		
 	def on_post_save(self, view):
 		remove_from_list(self.edited_tab_ids, view.id())
 		renew_list(self.opened_tab_ids, view.id())
-		self.printStat()
 
 
 	def on_modified(self, view):
@@ -53,8 +50,6 @@ class HandyTabsListener(sublime_plugin.EventListener):
 		else:
 			renew_list(self.opened_tab_ids, view.id())
 			remove_from_list(self.edited_tab_ids, view.id())
-
-		self.printStat()
 
 
 
