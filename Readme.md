@@ -6,14 +6,34 @@ Handy Tabs is a [Sublime Text 2](http://www.sublimetext.com/2) plugin that helps
 How often do you see something like this?
 ![FFFFUUUUUU](http://i.piccy.info/i7/35edbf83382b2225c7d84eac35ceef83/4-60-516/9482149/FFFFFFFFUUUUUUUUUUUUUUUU_env_2013_06_07_20_19_58.jpg) 
 
-Now it stops! 
+Now it stops!
+Now you 
 
 ## Installation
 To install this plugin, you have two options:
 
-1. If you have Package Control installed, simply search for `HandyTabs` to install.
+1. If you have [Sublime Package Control](http://wbond.net/sublime_packages/package_control) installed, simply search for `HandyTabs` to install.
 
-2. Clone source code to Sublime Text packages folder.
+2. Clone source code to Sublime Text packages folder *Sublime Text 2/Packages*.
+
+*OSX*
+```shell
+cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
+git clone git://github.com/travmik/HandyTabs.git
+```
+
+*Ubuntu*
+```shell
+cd ~/.config/sublime-text-2/Packages
+git clone git://github.com/travmik/HandyTabs.git
+```
+
+*Windows*
+```dos
+cd "%APPDATA%\Sublime Text 2\Packages"
+git clone git://github.com/travmik/HandyTabs.git
+```
+
 
 ## Settings
 
