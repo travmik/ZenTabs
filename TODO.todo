@@ -1,0 +1,13 @@
+ Zen tabs:
+  ☐ add posibility to mark tab as favorite @feature
+  ☐ added default enabled preferences - "highlight_modified_tabs": true @feature
+  ☐ pull request to Package Control for Sublime 
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+  ✔ investigate idea @done (13-05-19 17:32) @project(Zen tabs)
+  ✔ implement limiting tabs @done (13-05-26 20:02) @project(Zen tabs)
+  ✔ implement considering of 2 types of opened tabs - unsaved/drafts and all other @feature @done (13-06-01 19:46) @project(Zen tabs)
+  ✔ move tabs limit count in settings file @feature @done (13-06-01 19:47) @project(Zen tabs)
+  ✔ add tests with mocking @done (13-06-08 21:38) @project(Zen tabs)
+  ✔ rename project to more euphonic name - ZenTabs @done (13-06-21 15:17) @project(Zen tabs)

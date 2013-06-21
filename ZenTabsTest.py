@@ -58,6 +58,7 @@ class TestZenTabs(TestCase):
 		}	 
 		self.module_patcher = patch.dict('sys.modules', modules)
 		self.module_patcher.start()		
+
 		from ZenTabs import ZenTabsListener
 		self.tabs_mock = ZenTabsListener()	
 
