@@ -15,7 +15,7 @@ When you will open 11th tab the oldest one will be closed.
 
 ## Installation
 To install this plugin, you have two options:  
-1. If you have [Sublime Package Control](http://wbond.net/sublime_packages/package_control) installed, simply search for `ZenTabs` to install.  
+1. (NOT YET)If you have [Sublime Package Control](http://wbond.net/sublime_packages/package_control) installed, simply search for `ZenTabs` to install.  
 2. Clone source code to Sublime Text packages folder *Sublime Text 2/Packages*.  
 
 *OSX*
