@@ -1,4 +1,4 @@
-## [HandyTabs](https://github.com/travmik/HandyTabs)
+## [ZenTabs](https://github.com/travmik/ZenTabs)
 ## Overview
 
 Zen Tabs is a [Sublime Text 2](http://www.sublimetext.com/2) plugin that helps you to keep you tabbar in Zen.

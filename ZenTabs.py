@@ -1,6 +1,6 @@
 import sublime, sublime_plugin
 
-g_setting = sublime.load_settings('handytabs.sublime-settings')
+g_setting = sublime.load_settings('zentabs.sublime-settings')
 
 g_tabLimit = g_setting.get('open_tab_limit', 10)
 
@@ -23,7 +23,7 @@ def get_view_by_id(view_id):
 			break		
 	return view
 
-class HandyTabsListener(sublime_plugin.EventListener):
+class ZenTabsListener(sublime_plugin.EventListener):
 	window_id = 0	
 	opened_tab_ids = []
 	edited_tab_ids = []

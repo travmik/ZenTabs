@@ -45,7 +45,7 @@ class SublimeMock(object):
 
 
 
-class TestHandyTabs(TestCase):
+class TestZenTabs(TestCase):
 
 	def setUp(self):
 		self.sublime_mock = SublimeMock()
@@ -58,8 +58,8 @@ class TestHandyTabs(TestCase):
 		}	 
 		self.module_patcher = patch.dict('sys.modules', modules)
 		self.module_patcher.start()		
-		from HandyTabs import HandyTabsListener
-		self.tabs_mock = HandyTabsListener()	
+		from ZenTabs import ZenTabsListener
+		self.tabs_mock = ZenTabsListener()	
 
 	def tearDown(self):
 		self.module_patcher.stop()	
