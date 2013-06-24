@@ -50,3 +50,5 @@ To change these settings update `zentabs.sublime-settings`.
 
 ## Features and improvements
 [Todo](TODO.todo)
+
+Copyright 2011-2013 [Stanislav Parfeniuk](http://www.linkedin.com/in/stanislavparfeniuk). Licensed under the MIT License
