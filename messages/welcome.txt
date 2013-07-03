@@ -1,0 +1,10 @@
+Congratulations!!!
+
+You have done next step to Zen.
+
+Zen Tabs is a Sublime Text 2 plugin that helps you to keep you tab bar in Zen.
+
+You have to do nothing now. You just need to set opened tabs limit(default 10 or even 1) and enjoy. When you will open [limited_tabs_count + 1] tab the oldest one will be closed. That's all. 
+
+
+New features are coming. 
