@@ -17,13 +17,13 @@
                         [
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/ZenTabs/TODO.todo"},
+                                "args": {"file": "${packages}/Zen Tabs/TODO.todo"},
                                 "caption": "Todo"
                             },
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/ZenTabs/zentabs.sublime-settings"},
+                                "args": {"file": "${packages}/Zen Tabs/zentabs.sublime-settings"},
                                 "caption": "Settings – Default/User"
                             },
                             { "caption": "-" }
