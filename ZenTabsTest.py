@@ -132,9 +132,9 @@ class TestZenTabs(TestCase):
 
 	def printStat(self, msg):
 		if msg: print msg
-		print "u_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.edited_tab_ids)
-		print "o_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.opened_tab_ids)
-		print "w_tabs", " ".join(str(v.id()) for v in self.sublime_mock.active_window().views())
+		print("u_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.edited_tab_ids))
+		print("o_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.opened_tab_ids))
+		print("w_tabs", " ".join(str(v.id()) for v in self.sublime_mock.active_window().views()))
 
 if __name__ == '__main__':
     unittest.main()

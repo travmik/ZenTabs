@@ -1,8 +1,11 @@
 import sublime, sublime_plugin
 
-g_setting = sublime.load_settings('zentabs.sublime-settings')
 
-g_tabLimit = g_setting.get('open_tab_limit', 10)
+g_tabLimit = 50
+def plugin_loaded():
+    global g_tabLimit
+    settings = sublime.load_settings('zentabs.sublime-settings')
+    g_tabLimit = settings.get('open_tab_limit', g_tabLimit)
 
 def remove_from_list(p_list, view_id):
 	if view_id in p_list:
@@ -33,6 +36,9 @@ class ZenTabsListener(sublime_plugin.EventListener):
 
 	def on_activated(self, view):
 		if sublime.active_window().id() != self.window_id:
+			# temporary because ST2 doesn't have plugin_loaded listener 
+			plugin_loaded()
+			
 			self.opened_tab_ids = [view.id() for view in sublime.active_window().views() if not view.is_dirty() and not view.is_scratch()]
 			self.edited_tab_ids = [view.id() for view in sublime.active_window().views() if view.is_dirty() or view.is_scratch()]
 			self.window_id = sublime.active_window().id()
@@ -80,6 +86,6 @@ class ZenTabsListener(sublime_plugin.EventListener):
 				break
 
 	def printStat(self):
-		print "u_tabs", " ".join(str(v_id) for v_id in self.edited_tab_ids)
-		print "o_tabs", " ".join(str(v_id) for v_id in self.opened_tab_ids)
-		print "w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views())
+		print("u_tabs", " ".join(str(v_id) for v_id in self.edited_tab_ids))
+		print("o_tabs", " ".join(str(v_id) for v_id in self.opened_tab_ids))
+		print("w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views()))
