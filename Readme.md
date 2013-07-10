@@ -52,4 +52,11 @@ To change these settings update `zentabs.sublime-settings`.
 ## Features and improvements
 [Todo](TODO.todo)
 
+## Contribution
+You can contribute on [github](https://github.com/travmik/ZenTabs).    
+We always welcome pull requests. Here's some general rules for pull requests be accepted:  
+- [PEP8](http://www.python.org/dev/peps/pep-0008/) is our coding style guide.   
+- Please create a branch before sending pull requests.   
+- Your pull request should be atomic. That is, fix a bug or implementing a feature in one commit instead of multiple commit.    This is a recommendation, not a requirement.   
+
 Copyright 2011-2013 [Stanislav Parfeniuk](http://www.linkedin.com/in/stanislavparfeniuk). Licensed under the MIT License

@@ -1,13 +1,15 @@
  Zen tabs:
    ☐ investigate loading errors @bug
-   ☐ add support for ST3 [https://github.com/travmik/ZenTabs/issues/1] @enhancement
-   ☐ add posibility to mark tab as favorite @feature
+   ☐ improve list comprehensions in on_activated method @enhancement 
+   ☐ add possibility to mark tab as favorite @feature
    ☐ added default enabled preferences - "highlight_modified_tabs": true @feature
-   ☐ pull request to Package Control for Sublime 
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ add settings loading on plugin load time @enhancement @done (13-07-10 09:37) @project(Zen tabs)
+  ✔ python 3 compatibility  @enhancement @done (13-07-09 20:01) @project(Zen tabs)
   ✔ Unable to save settings [https://github.com/travmik/ZenTabs/issues/2] @bug @done (13-07-09 20:01) @project(Zen tabs)
+  ✔ pull request to Package Control for Sublime @done (13-07-03 09:37) @project(Zen tabs)
   ✔ investigate idea @done (13-05-19 17:32) @project(Zen tabs)
   ✔ implement limiting tabs @done (13-05-26 20:02) @project(Zen tabs)
   ✔ implement considering of 2 types of opened tabs - unsaved/drafts and all other @feature @done (13-06-01 19:46) @project(Zen tabs)
