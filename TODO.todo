@@ -1,11 +1,11 @@
  Zen tabs:
-   ☐ investigate loading errors @bug
-   ☐ improve list comprehensions in on_activated method @enhancement 
    ☐ add possibility to mark tab as favorite @feature
    ☐ added default enabled preferences - "highlight_modified_tabs": true @feature
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ investigate loading errors @bug @done (13-07-11 16:27) @project(Zen tabs)
+  ✔ improve list comprehensions in on_activated method @enhancement @done (13-07-11 16:27) @project(Zen tabs)
   ✔ add settings loading on plugin load time @enhancement @done (13-07-10 09:37) @project(Zen tabs)
   ✔ python 3 compatibility  @enhancement @done (13-07-09 20:01) @project(Zen tabs)
   ✔ Unable to save settings [https://github.com/travmik/ZenTabs/issues/2] @bug @done (13-07-09 20:01) @project(Zen tabs)
