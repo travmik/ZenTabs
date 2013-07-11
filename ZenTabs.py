@@ -24,10 +24,12 @@ def renew_list(p_list, view_id):
 
 def get_view_by_id(view_id):
     view = None
-    for v in sublime.active_window().views():
-        if v.id() == view_id:
-            view = v
-            break
+    window = sublime.active_window()
+    if window is not None:
+        for v in sublime.active_window().views():
+            if v.id() == view_id:
+                view = v
+                break
     return view
 
 class ZenTabsListener(sublime_plugin.EventListener):
@@ -39,7 +41,7 @@ class ZenTabsListener(sublime_plugin.EventListener):
         remove_from_list(self.opened_tab_ids, view.id())
 
     def on_activated(self, view):
-        if sublime.active_window().id() != self.window_id:
+        if sublime.active_window() is not None and sublime.active_window().id() != self.window_id:
             self.window_id = sublime.active_window().id()
             
             self.opened_tab_ids, self.edited_tab_ids = [], []
