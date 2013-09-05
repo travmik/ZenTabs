@@ -20,20 +20,20 @@ To install this plugin, you have two options:
 3. Download archive with the latest [release](https://github.com/travmik/ZenTabs/releases) and unpack it to Sublime Text packages folder *Sublime Text 2/Packages*.  
 
 *OSX*
-```Shell
-cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
-git clone git://github.com/travmik/ZenTabs.git
-```  
+
+    cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/
+    git clone git://github.com/travmik/ZenTabs.git
+  
 *Linux*
-```Shell
-cd ~/.config/sublime-text-2/Packages
-git clone git://github.com/travmik/ZenTabs.git
-```  
+
+    cd ~/.config/sublime-text-2/Packages
+    git clone git://github.com/travmik/ZenTabs.git
+
 *Windows*
-```Shell
-cd "%APPDATA%\Sublime Text 2\Packages"
-git clone git://github.com/travmik/ZenTabs.git
-```
+
+    cd "%APPDATA%\Sublime Text 2\Packages"
+    git clone git://github.com/travmik/ZenTabs.git
+
 
 
 ## Settings
