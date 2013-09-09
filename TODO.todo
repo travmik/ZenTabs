@@ -1,9 +1,12 @@
  Zen tabs:
    ☐ add possibility to mark tab as favorite @feature
-   ☐ added default enabled preferences - "highlight_modified_tabs": true @feature
+   ☐ add preview tabs in popup when tabs switching @feature
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ add reload settings key binding @feature @done (13-09-09 23:04) @project(Zen tabs)
+  ✔ add default enabled preferences - "highlight_modified_tabs": true @feature @done (13-09-09 22:19) @project(Zen tabs)
+    Version 1.0.0
   ✔ investigate loading errors @bug @done (13-07-11 16:27) @project(Zen tabs)
   ✔ improve list comprehensions in on_activated method @enhancement @done (13-07-11 16:27) @project(Zen tabs)
   ✔ add settings loading on plugin load time @enhancement @done (13-07-10 09:37) @project(Zen tabs)

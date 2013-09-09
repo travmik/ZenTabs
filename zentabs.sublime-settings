@@ -1,3 +1,4 @@
 {
-    "open_tab_limit"   :  10
+    "open_tab_limit":  10,
+    "highlight_modified_tabs": true
 }
