@@ -34,22 +34,18 @@ To install this plugin, you have two options:
     cd "%APPDATA%\Sublime Text 2\Packages"
     git clone git://github.com/travmik/ZenTabs.git
 
-
+## Key bindings
+`Preferences > Package Settings > Zen Tabs > Key Bindings`  
+`alt+shif+r` - reload settings without restarting sublime  
+`alt+tab` - show quick panel with opened tabs  
 
 ## Settings
-
-There are several settings that control Zen Tabs behavior:  
+`Preferences > Package Settings > Zen Tabs > Settings`  
 * __open_tab_limit__: Controls the maximum allowed number of tabs. 
 Note that edited or draft tabs are not count towards this limit. The default is 10.  
 * __highlight_modified_tabs__: Makes tabs with modified files more visible. True by default.   
-To change these settings update `zentabs.sublime-settings`. Then press "alt+shift+r" to reload settings. 
-
-```json
-    {
-        "open_tab_limit"   :  10,
-        "highlight_modified_tabs": true
-    }  
-```
+* __show_full_path__: Show full path to file in quick panel. False by default. Zennn....  
+After editing don't forget to press `alt+shift+r` to reload settings.
 
 ## Features and improvements
 [Todo](TODO.todo)
