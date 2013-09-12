@@ -38,14 +38,16 @@ To install this plugin, you have two options:
 
 ## Settings
 
-There are only one settings that control Zen Tabs behavior:  
-* __open\_tab_limit__: Controls the maximum allowed number of tabs. 
+There are several settings that control Zen Tabs behavior:  
+* __open_tab_limit__: Controls the maximum allowed number of tabs. 
 Note that edited or draft tabs are not count towards this limit. The default is 10.  
-To change these settings update `zentabs.sublime-settings`.  
+* __highlight_modified_tabs__: Makes tabs with modified files more visible. True by default.   
+To change these settings update `zentabs.sublime-settings`. Then press "alt+shift+r" to reload settings. 
 
 ```json
     {
-        "open_tab_limit"   :  10
+        "open_tab_limit"   :  10,
+        "highlight_modified_tabs": true
     }  
 ```
 

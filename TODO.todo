@@ -1,10 +1,14 @@
  Zen tabs:
    ☐ add possibility to mark tab as favorite @feature
-   ☐ add quick panel with possibility to chose tab @feature
    ☐ improve tab manipulation - open position, rearranging by modified date so on @feature
+   ☐ show recently closed tabs @feature
+   ☐ hide tabbar when only one tab left @feature
+   ☐ investigate right justifieng in quick panel @tab_switcher @improvements
+   ☐ added more understandable symbols to show file status @tab_switcher @improvements
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+  ✔ add quick panel with possibility to chose tab @feature @tab_switcher @done (13-09-13 00:58) @project(Zen tabs)
   ✔ add reload settings key binding @feature @done (13-09-09 23:04) @project(Zen tabs)
   ✔ add default enabled preferences - "highlight_modified_tabs": true @feature @done (13-09-09 22:19) @project(Zen tabs)
     Version 1.0.0

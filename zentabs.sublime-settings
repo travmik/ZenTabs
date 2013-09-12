@@ -1,4 +1,5 @@
 {
     "open_tab_limit":  10,
-    "highlight_modified_tabs": true
+    "highlight_modified_tabs": true,
+    "show_full_path": false
 }
