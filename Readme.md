@@ -37,19 +37,19 @@ To install this plugin, you have two options:
 ## Key bindings
 `Preferences > Package Settings > Zen Tabs > Key Bindings`  
 `alt+shif+r` - reload settings without restarting sublime  
-`alt+tab` - show quick panel with opened tabs  
+`alt+tab` - show Tab Browser with opened tabs  
 
 ## Settings
 `Preferences > Package Settings > Zen Tabs > Settings`  
 * __open_tab_limit__: Controls the maximum allowed number of tabs. 
 Note that edited or draft tabs are not count towards this limit. The default is 10.  
 * __highlight_modified_tabs__: Makes tabs with modified files more visible. True by default.   
-* __show_full_path__: Show full path to file in quick panel. False by default. Zennn....  
+* __show_full_path__: Show full path to file in Tab Browser. False by default. Zennn....  
 After editing don't forget to press `alt+shift+r` to reload settings.
 
-## Quick panel
-When you click `alt+tab`(default - can be changed in key-binding) Quick Panel with opened tabs will be opened:
-![Quick Panle](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-QuickPanel.jpg)
+## Tab Browser
+When you click `alt+tab`(default - can be changed in key-binding) Tab Browser with opened tabs will be opened:
+![Tab Browser](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-QuickPanel.jpg)
 * you can proceed to push `alt+tab` and move through tabs
 * you can use arrow keys to move through tabs
 * you can start typing name of tab to filter items in panel
