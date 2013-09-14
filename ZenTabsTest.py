@@ -1,6 +1,8 @@
-from unittest import TestCase
 import unittest
-if __name__ == '__main__': 
+from unittest import TestCase
+
+
+if __name__ == '__main__':
     from mock import MagicMock
     from mock import patch
 
@@ -11,8 +13,10 @@ if __name__ == '__main__':
 
         def id(self):
             return self._id
+
         def is_dirty(self):
             return self._dirty
+
         def is_scratch(self):
             return self._scratch
 
@@ -31,7 +35,6 @@ if __name__ == '__main__':
                 self._views.remove(self._focused_view)
                 self._focused_view = None
 
-
     class SublimeMock(object):
         sublime = MagicMock()
         EventListener = object().__class__
@@ -48,8 +51,6 @@ if __name__ == '__main__':
         def version(self):
             return 2129
 
-
-
     class TestZenTabs(TestCase):
 
         def setUp(self):
@@ -60,7 +61,7 @@ if __name__ == '__main__':
             modules = {
                 'sublime': self.sublime_mock,
                 'sublime_plugin': self.sublime_plugin_mock
-            }    
+            }
             self.module_patcher = patch.dict('sys.modules', modules)
             self.module_patcher.start()
 
@@ -71,9 +72,6 @@ if __name__ == '__main__':
             self.module_patcher.stop()
 
         def test1(self):
-            tabListener = self.tabs_mock
-            sublime = self.sublime_mock
-
             for i in range(10):
                 self.activate(i)
             self.printStat("opened 10 tabs[0...9]")
@@ -81,11 +79,10 @@ if __name__ == '__main__':
             self.close(1)
             self.printStat("closed view with id=1")
 
-
             self.activate(2)
             self.printStat("activated view with id=2")
 
-            for i in range(10,13):
+            for i in range(10, 13):
                 self.activate(i)
             self.printStat("opened more 3 tabs[10...12]")
 
@@ -105,7 +102,6 @@ if __name__ == '__main__':
 
             self.activate(13)
             self.printStat("opened one more view with id 13")
-
 
         def close(self, view_id):
             view = self.get_view_by_id(view_id)
@@ -136,9 +132,11 @@ if __name__ == '__main__':
             return view
 
         def printStat(self, msg):
-            if msg: print msg
-            print("u_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.curr_win().edited_tab_ids))
-            print("o_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.curr_win().opened_tab_ids))
+            if msg:
+                print msg
+            from ZenTabs import win_tabs
+            print("u_tabs", " ".join(str(v_id) for v_id in win_tabs.edited_tab_ids))
+            print("o_tabs", " ".join(str(v_id) for v_id in win_tabs.opened_tab_ids))
             print("w_tabs", " ".join(str(v.id()) for v in self.sublime_mock.active_window().views()))
 
 if __name__ == '__main__':
