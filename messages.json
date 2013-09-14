@@ -1,3 +1,4 @@
 {
-    "install": "messages/welcome.txt"
+    "install": "messages/welcome.txt",
+    "upgrade": "messages/welcome.txt"
 }
