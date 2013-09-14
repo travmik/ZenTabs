@@ -1,5 +1,6 @@
 import os
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 import LogUtils
 from LogUtils import Logger
 from TabsWorker import WindowTabs
@@ -7,7 +8,10 @@ from TabsWorker import WindowTabs
 
 g_tabLimit = 50
 g_showFullPath = False
+g_selectedItems = 1
 win_tabs = WindowTabs()
+
+
 def plugin_loaded():
     global g_tabLimit
     global g_showFullPath
@@ -19,11 +23,12 @@ def plugin_loaded():
         global_settings = sublime.load_settings("Preferences.sublime-settings")
         global_settings.set("highlight_modified_tabs", highlight_modified_tabs)
         sublime.save_settings("Preferences.sublime-settings")
-    
+
 # temporary because ST2 doesn't have plugin_loaded event
 if int(sublime.version()) < 3000:
     plugin_loaded()
     LogUtils.plugin_loaded()
+
 
 def is_preview(view):
     return sublime.active_window().get_view_index(view)[1] == -1
@@ -31,6 +36,7 @@ def is_preview(view):
 
 def is_active(view):
     return view.id() == sublime.active_window().active_view().id()
+
 
 def is_edited(view):
     return view.is_dirty() or view.is_scratch()
@@ -41,7 +47,7 @@ def is_closable(view):
                     or is_preview(view) \
                     or is_active(view) \
                     or view.is_loading()
-                    
+
     return not(is_not_closable)
 
 
@@ -51,7 +57,6 @@ class ZenTabsReloadCommand(sublime_plugin.TextCommand):
         LogUtils.plugin_loaded()
 
 
-g_selectedItems = 1
 class SwitchTabsCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
@@ -59,7 +64,7 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
         self.active_view = self.window.active_view()
         self.name_list = []
         self.view_list = []
-        
+
         view_ids = reversed(win_tabs.edited_tab_ids)
         self.prepare_lists(view_ids)
         view_ids = reversed(win_tabs.opened_tab_ids)
@@ -72,8 +77,8 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
-            is_current = self.window.get_view_index(self.active_view) == self.window.get_view_index(view)  
-            is_draft = view.file_name() is None              
+            is_current = self.window.get_view_index(self.active_view) == self.window.get_view_index(view)
+            is_draft = view.file_name() is None
 
             if is_draft:
                 name = view.name()
@@ -84,11 +89,11 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
                 name = os.path.basename(view.file_name())
 
             if is_current:
-                name += "\t^" #current
+                name += "\t^"  # current
             if view.file_name() is None or view.is_dirty():
-                name += "\t*" #unsaved
+                name += "\t*"  # unsaved
             if view.is_read_only():
-                name += "\t#" #read only
+                name += "\t#"  # read only
 
             self.add_element(is_current, self.view_list, view)
             if g_showFullPath and not is_draft:
@@ -97,17 +102,16 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
             else:
                 self.add_element(is_current, self.name_list, [name])
 
-
     def next_item(self, list_size):
         global g_selectedItems
-        if g_selectedItems >= list_size - 1: 
+        if g_selectedItems >= list_size - 1:
             g_selectedItems = 0
-        else: 
+        else:
             g_selectedItems += 1
 
     def on_done(self, index):
         global g_selectedItems
-        if index > - 1:
+        if index > -1:
             g_selectedItems = 1
             sublime.active_window().focus_view(self.view_list[index])
         self.name_list = []
@@ -120,34 +124,33 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
             list.append(element)
 
 
-
 class ZenTabsListener(sublime_plugin.EventListener):
     window_id = 0
 
-    @Logger(msg = "on_close")
+    @Logger(msg="on_close")
     def on_close(self, view):
         win_tabs.remove_from_list(win_tabs.opened_tab_ids, view.id())
 
-    @Logger(msg = "on_activated")
+    @Logger(msg="on_activated")
     def on_activated(self, view):
         if sublime.active_window() is not None and sublime.active_window().id() != self.window_id:
             self.window_id = sublime.active_window().id()
-            
+
             win_tabs.opened_tab_ids, win_tabs.edited_tab_ids = [], []
             for view in sublime.active_window().views():
                 if is_edited(view):
                     win_tabs.renew_list(win_tabs.edited_tab_ids, view.id())
-                else :
+                else:
                     win_tabs.renew_list(win_tabs.opened_tab_ids, view.id())
-            
+
         sublime.set_timeout(lambda: self.process(view.id()), 200)
 
-    @Logger(msg = "on_post_save")
+    @Logger(msg="on_post_save")
     def on_post_save(self, view):
         win_tabs.remove_from_list(win_tabs.edited_tab_ids, view.id())
         win_tabs.renew_list(win_tabs.opened_tab_ids, view.id())
 
-    @Logger(msg = "on_modified")
+    @Logger(msg="on_modified")
     def on_modified(self, view):
         if view.is_dirty():
             win_tabs.renew_list(win_tabs.edited_tab_ids, view.id())
