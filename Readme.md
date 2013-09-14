@@ -1,6 +1,5 @@
 ## [ZenTabs](https://github.com/travmik/ZenTabs)
-## Overview  
-Zen Tabs is a [Sublime Text 2](http://www.sublimetext.com/2) plugin that helps you to keep you tab bar in Zen.  
+Zen Tabs is a [Sublime Text 2](http://www.sublimetext.com/2)/[3](http://www.sublimetext.com/3) plugin that helps you to keep you tab bar in Zen.  
 How often do you see something like this?
 ![FFFFUUUUUU](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-FFUUU.jpg)  
 Now it stops!  
@@ -54,12 +53,11 @@ When you click `alt+tab`(default - can be changed in key-binding) Quick Panel wi
 * you can use arrow keys to move through tabs
 * you can start typing name of tab to filter items in panel
 
-## Features and improvements
-[Todo](TODO.todo)
+## [Features and improvements](TODO.todo)
 
 ## Contribution
 You can contribute on [github](https://github.com/travmik/ZenTabs).    
-We always welcome pull requests. Here's some general rules for pull requests be accepted:  
+I am always welcome pull requests. Here's some general rules for pull requests be accepted:  
 - [PEP8](http://www.python.org/dev/peps/pep-0008/) is our coding style guide.   
 - Please create a branch before sending pull requests.   
 - Your pull request should be atomic. That is, fix a bug or implementing a feature in one commit instead of multiple commit.    This is a recommendation, not a requirement.   
