@@ -1,16 +1,17 @@
 ## [ZenTabs](https://github.com/travmik/ZenTabs)
 Zen Tabs is a [Sublime Text 2](http://www.sublimetext.com/2)/[3](http://www.sublimetext.com/3) plugin that helps you to keep you tab bar in Zen.  
-How often do you see something like this?
+How often do you see something like this? It is useless pice of sh... Isn't it?
 ![FFFFUUUUUU](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-FFUUU.jpg)  
 Now it stops!  
-Now you can be in Zen when you working with Sublime Text.
+Now you can be in Zen when you are working with Sublime Text.  
+Focused and with peace in mind.
 
 Your tab bar can always have a look like this:
 ![Zen](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-10.jpg)  
 Or even like this:  
 ![Zeeeeeeeeen](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-Zen.jpg)  
 You have to do nothing for this. You just need to install this package, set opened tabs limit(default 10) and enjoy. 
-When you will open 11th tab the oldest one will be closed.
+When you will open 11th tab the oldest one will be closed. And don't worry __it will never close any tab with unsaved work__. If you have nothing but tabs with unsaved work, it will just ignore the limit and create a new tab anyway.
 
 ## Installation
 To install this plugin, you have two options:  
@@ -57,7 +58,7 @@ When you click `alt+tab`(default - can be changed in key-binding) Quick Panel wi
 
 ## Contribution
 You can contribute on [github](https://github.com/travmik/ZenTabs).    
-I am always welcome pull requests. Here's some general rules for pull requests be accepted:  
+I am always welcome pull requests. Here's some general rules for pull requests to be accepted:  
 - [PEP8](http://www.python.org/dev/peps/pep-0008/) is our coding style guide.   
 - Please create a branch before sending pull requests.   
 - Your pull request should be atomic. That is, fix a bug or implementing a feature in one commit instead of multiple commit.    This is a recommendation, not a requirement.   
