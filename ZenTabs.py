@@ -1,8 +1,8 @@
+import os
 import sublime, sublime_plugin
 import LogUtils
 from LogUtils import Logger
 from TabsWorker import WindowTabs
-import os
 
 
 g_tabLimit = 50
