@@ -58,7 +58,7 @@ When you click `alt+tab`(default - can be changed in key-binding) Tab Browser wi
 
 ## Contribution
 You can contribute on [github](https://github.com/travmik/ZenTabs).    
-I am always welcome pull requests. Here's some general rules for pull requests to be accepted:  
+I always welcome pull requests. Here's some general rules for pull requests to be accepted:  
 - [PEP8](http://www.python.org/dev/peps/pep-0008/) is our coding style guide.   
 - Please create a branch before sending pull requests.   
 - Your pull request should be atomic. That is, fix a bug or implementing a feature in one commit instead of multiple commit.    This is a recommendation, not a requirement.   
