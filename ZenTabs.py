@@ -60,9 +60,9 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
         self.name_list = []
         self.view_list = []
         
-        view_ids = reversed(win_tabs.opened_tab_ids)
-        self.prepare_lists(view_ids)
         view_ids = reversed(win_tabs.edited_tab_ids)
+        self.prepare_lists(view_ids)
+        view_ids = reversed(win_tabs.opened_tab_ids)
         self.prepare_lists(view_ids)
 
         self.window.run_command("hide_overlay")
@@ -72,41 +72,36 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
-            if view.file_name() is None:
+            is_current = self.window.get_view_index(self.active_view) == self.window.get_view_index(view)  
+            is_draft = view.file_name() is None              
+
+            if is_draft:
                 name = view.name()
                 #set the view name to untitled if we get an empty name
                 if len(name) == 0:
                     name = "untitled"
             else:
-                if g_showFullPath:
-                    name = view.file_name()
-                else: 
-                    name = os.path.basename(view.file_name())
+                name = os.path.basename(view.file_name())
 
-            # check if this name is already in use, and if so, try to append 
-            if not g_showFullPath:
-                for entry in self.name_list:
-                    if entry[0] == name:
-                        index = self.name_list.index(entry)
-                        if self.view_list[index].file_name() is not None:
-                            self.name_list[index][0] = self.view_list[index].file_name()
-                        if view.file_name() is not None:
-                            name = view.file_name()
-
-            if self.window.get_view_index(self.active_view) == self.window.get_view_index(view):
+            if is_current:
                 name += "\t^" #current
             if view.file_name() is None or view.is_dirty():
                 name += "\t*" #unsaved
             if view.is_read_only():
                 name += "\t#" #read only
 
-            self.view_list.append(view)
-            self.name_list.append([name])
+            self.add_element(is_current, self.view_list, view)
+            if g_showFullPath and not is_draft:
+                caption = os.path.dirname(view.file_name())
+                self.add_element(is_current, self.name_list, [name, caption])
+            else:
+                self.add_element(is_current, self.name_list, [name])
+
 
     def next_item(self, list_size):
         global g_selectedItems
         if g_selectedItems >= list_size - 1: 
-            g_selectedItems = 1
+            g_selectedItems = 0
         else: 
             g_selectedItems += 1
 
@@ -117,6 +112,13 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
             sublime.active_window().focus_view(self.view_list[index])
         self.name_list = []
         self.view_list = []
+
+    def add_element(self, is_current, list, element):
+        if is_current:
+            list.insert(0, element)
+        else:
+            list.append(element)
+
 
 
 class ZenTabsListener(sublime_plugin.EventListener):
@@ -180,6 +182,6 @@ class ZenTabsListener(sublime_plugin.EventListener):
             else:
                 break
 
-    #for tests
-    def currentWindow(self):
+    #for logger and tests
+    def curr_win(self):
         return win_tabs

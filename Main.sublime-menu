@@ -12,7 +12,7 @@
                 "children":
                 [
                     {
-                        "caption": "ZenTabs",
+                        "caption": "Zen Tabs",
                         "children":
                         [
                             {
@@ -24,7 +24,12 @@
                             {
                                 "command": "open_file",
                                 "args": {"file": "${packages}/Zen Tabs/zentabs.sublime-settings"},
-                                "caption": "Settings – Default/User"
+                                "caption": "Settings"
+                            },
+                            {
+                                "command": "open_file",
+                                "args": {"file": "${packages}/Zen Tabs/Default.sublime-keymap"},
+                                "caption": "Key Bindnigs"
                             },
                             { "caption": "-" }
                         ]

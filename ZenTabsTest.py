@@ -137,8 +137,8 @@ if __name__ == '__main__':
 
         def printStat(self, msg):
             if msg: print msg
-            print("u_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.currentWindow().edited_tab_ids))
-            print("o_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.currentWindow().opened_tab_ids))
+            print("u_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.curr_win().edited_tab_ids))
+            print("o_tabs", " ".join(str(v_id) for v_id in self.tabs_mock.curr_win().opened_tab_ids))
             print("w_tabs", " ".join(str(v.id()) for v in self.sublime_mock.active_window().views()))
 
 if __name__ == '__main__':

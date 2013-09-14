@@ -11,14 +11,15 @@ def Logger(function = None, msg = "Debug", full = True):
     def LOG(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
+            responce = function(*args, **kwargs)
             if is_debug_enabled: 
-                zen = args[0]
                 print("======== " + str(msg) + " ========")
+                zen = args[0]
                 if True:
-                    print("e_tabs", " ".join(str(v_id) for v_id in zen.edited_tab_ids))
-                    print("o_tabs", " ".join(str(v_id) for v_id in zen.opened_tab_ids))
+                    print("e_tabs", " ".join(str(v_id) for v_id in zen.curr_win().edited_tab_ids))
+                    print("o_tabs", " ".join(str(v_id) for v_id in zen.curr_win().opened_tab_ids))
                     print("w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views()))
-            return function(*args, **kwargs)
+            return responce
 
         return wrapper
 
