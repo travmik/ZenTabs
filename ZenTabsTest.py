@@ -133,7 +133,7 @@ if __name__ == '__main__':
 
         def printStat(self, msg):
             if msg:
-                print msg
+                print(msg)
             from ZenTabs import win_tabs
             print("u_tabs", " ".join(str(v_id) for v_id in win_tabs.edited_tab_ids))
             print("o_tabs", " ".join(str(v_id) for v_id in win_tabs.opened_tab_ids))
