@@ -3,8 +3,22 @@ import sys
 from functools import wraps
 import sublime
 import sublime_plugin
-from TabsWorker import WindowTabs
 
+
+# temporary because ST2 doesn't have plugin_loaded event
+def sublime_text_3():
+    """Returns True if this is Sublime Text 3
+    """
+    try:
+        return int(sublime.version()) >= 3000
+    except ValueError:
+        return sys.hexversion >= 0x030000F0
+
+if not sublime_text_3():
+    from TabsWorker import WindowTabs
+    sublime.active_window().run_command('zen_tabs_reload')
+else:
+    from .TabsWorker import WindowTabs
 
 g_tabLimit = 50
 g_showFullPath = False
@@ -26,19 +40,6 @@ def plugin_loaded():
         global_settings = sublime.load_settings("Preferences.sublime-settings")
         global_settings.set("highlight_modified_tabs", highlight_modified_tabs)
         sublime.save_settings("Preferences.sublime-settings")
-
-
-# temporary because ST2 doesn't have plugin_loaded event
-def sublime_text_3():
-    """Returns True if this is Sublime Text 3
-    """
-    try:
-        return int(sublime.version()) >= 3000
-    except ValueError:
-        return sys.hexversion >= 0x030000F0
-
-if sublime_text_3:
-    sublime.active_window().run_command('zen_tabs_reload')
 
 
 def is_preview(view):
