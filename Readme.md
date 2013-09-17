@@ -50,9 +50,15 @@ After editing don't forget to press `alt+shift+r` to reload settings.
 ## Tab Browser
 To open Tab Browser just press `alt+tab`(default - can be changed in key-binding):
 ![Tab Browser](https://dl.dropboxusercontent.com/u/22258694/ZenTabs/ZenTabs-QuickPanel.jpg)
+
 * you can proceed to push `alt+tab` and move through tabs
 * you can use arrow keys to move through tabs
 * you can start typing name of tab to filter items in panel
+
+Zen sybols:  
+__^__ current opened tab  
+__\*__ modified tab  
+__\#__ read only tab
 
 ## [Features and improvements](TODO.todo)
 
