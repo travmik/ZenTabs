@@ -16,7 +16,7 @@ def sublime_text_3():
 
 if not sublime_text_3():
     from TabsWorker import WindowTabs
-    sublime.active_window().run_command('zen_tabs_reload')
+    sublime.run_command('zen_tabs_reload')
 else:
     from .TabsWorker import WindowTabs
 
