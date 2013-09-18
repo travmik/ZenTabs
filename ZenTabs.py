@@ -31,7 +31,7 @@ def plugin_loaded():
     global g_tabLimit
     global g_showFullPath
     global is_debug_enabled
-    settings = sublime.load_settings('zentabs.sublime-settings')
+    settings = sublime.load_settings('ZenTabs.sublime-settings')
     g_tabLimit = settings.get('open_tab_limit', g_tabLimit)
     g_showFullPath = settings.get('show_full_path', g_showFullPath)
     is_debug_enabled = settings.get('debug', is_debug_enabled)

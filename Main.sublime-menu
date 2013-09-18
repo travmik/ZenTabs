@@ -23,13 +23,24 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/Zen Tabs/zentabs.sublime-settings"},
-                                "caption": "Settings"
+                                "args": {"file": "${packages}/Zen Tabs/Default.sublime-settings"},
+                                "caption": "Settings - Default"
                             },
+                            {
+                                "command": "open_file", 
+                                "args": {"file": "${packages}/User/ZenTabs.sublime-settings"},
+                                "caption": "Settings – User"
+                            },
+                            { "caption": "-" },
                             {
                                 "command": "open_file",
                                 "args": {"file": "${packages}/Zen Tabs/Default.sublime-keymap"},
-                                "caption": "Key Bindnigs"
+                                "caption": "Key Bindnigs - Default"
+                            },
+                            {
+                                "command": "open_file", 
+                                "args": {"file": "${packages}/User/Default.sublime-keymap"},
+                                "caption": "Key Bindnigs – User"
                             },
                             { "caption": "-" }
                         ]

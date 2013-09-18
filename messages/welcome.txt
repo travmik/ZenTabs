@@ -9,6 +9,9 @@ You have to do nothing now. You just need to set opened tabs limit to 10(default
 New features are comming up!
 Github link - https://github.com/travmik/ZenTabs
 
+Version 1.1.6
+✔ Fixing ST3 settings compatibility. User settings can be invalidated. Sorry for inconvenience.
+
 Version 1.1.1 - 1.1.5
 ✔ Fixing messages
 ✔ Refactoring to follow PEP8
