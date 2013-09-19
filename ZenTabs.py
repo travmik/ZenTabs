@@ -178,6 +178,11 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
+            if view is None:
+                win_tabs.remove_from_list(win_tabs.opened_tab_ids, view_id)
+                win_tabs.remove_from_list(win_tabs.edited_tab_ids, view_id)
+                break
+
             is_current = self.window.get_view_index(self.active_view) == self.window.get_view_index(view)
             is_draft = view.file_name() is None
 
