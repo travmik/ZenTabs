@@ -1,17 +1,63 @@
 import sublime
 
 
+def is_edited(view):
+    return view.is_dirty() or view.is_scratch()
+
+
+def is_preview(view):
+    return sublime.active_window().get_view_index(view)[1] == -1
+
+
+def is_active(view):
+    return view.id() == sublime.active_window().active_view().id()
+
+
+def is_closable(view):
+    is_not_closable = is_edited() \
+                    or is_preview(view) \
+                    or is_active(view) \
+                    or view.is_loading()
+    return not(is_not_closable)
+
+
 class WindowTabs(object):
-    opened_tab_ids = []
-    edited_tab_ids = []
+    def __init__(self, win_id):
+        self.win_id = win_id
+        self.opened_tab_ids = []
+        self.edited_tab_ids = []
+        self.favorited_tab_ids = []
 
     def add_to_opened(self, view_id):
         if view_id not in self.edited_tab_ids:
             self.renew_list(self.opened_tab_ids, view_id)
 
+    def renew_lists(self, view):
+        if view.is_dirty():
+            self.renew_modifyed_list(view.id())
+            self.remove_from_list(self.opened_tab_ids, view.id())
+        else:
+            self.renew_opened_list(view.id())
+            self.remove_from_list(self.edited_tab_ids, view.id())
+
+    def remove_from_lists(self, view_id):
+        if view_id in self.opened_tab_ids:
+            self.opened_tab_ids.remove(view_id)
+        if view_id in self.edited_tab_ids:
+            self.edited_tab_ids.remove(view_id)
+
+    def remove_from_opened_list(self, view_id):
+        self.remove_from_list(self.opened_tab_ids, view_id)
+
     def remove_from_list(self, p_list, view_id):
         if view_id in p_list:
             p_list.remove(view_id)
+
+    def renew_opened_list(self, view_id):
+        self.renew_list(self.opened_tab_ids, view_id)
+
+    def renew_modifyed_list(self, view_id):
+        self.renew_list(self.edited_tab_ids, view_id)
 
     def renew_list(self, p_list, view_id):
         if self.get_view_by_id(view_id) is not None:
@@ -29,3 +75,22 @@ class WindowTabs(object):
                     view = v
                     break
         return view
+
+
+class WindowSet(object):
+    window_set = {}
+
+    def add_window(self, win_id, win_tabs):
+        self.window_set[win_id] = win_tabs
+
+    def get_current_window_tab(self, window):
+        if window.id() not in self.window_set:
+            win_tabs = WindowTabs(window.id())
+            for view in window.views():
+                if is_edited(view):
+                    win_tabs.renew_modifyed_list(view.id())
+                else:
+                    win_tabs.renew_opened_list(view.id())
+
+            self.add_window(window.id(), win_tabs)
+        return self.window_set[window.id()]

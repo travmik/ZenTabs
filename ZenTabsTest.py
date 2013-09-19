@@ -51,6 +51,9 @@ if __name__ == '__main__':
         def version(self):
             return 2129
 
+        def run_command(self, command):
+            pass
+
     class TestZenTabs(TestCase):
 
         def setUp(self):

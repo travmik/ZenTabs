@@ -1,4 +1,5 @@
 [
   { "keys": ["alt+shift+r"], "command": "zen_tabs_reload"},
-  { "keys": ["alt+tab"], "command": "switch_tabs"}
+  { "keys": ["alt+tab"], "command": "switch_tabs"},
+  { "keys": ["alt+shift+f"], "command": "zen_tabs_favorits"}
 ]

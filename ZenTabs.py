@@ -1,5 +1,7 @@
 import os
 import sys
+import shutil
+import re
 from functools import wraps
 import sublime
 import sublime_plugin
@@ -15,16 +17,19 @@ def sublime_text_3():
         return sys.hexversion >= 0x030000F0
 
 if not sublime_text_3():
-    from TabsWorker import WindowTabs
+    from TabsWorker import is_edited, is_active, is_closable
+    from TabsWorker import WindowSet, WindowTabs
     sublime.run_command('zen_tabs_reload')
 else:
-    from .TabsWorker import WindowTabs
+    from .TabsWorker import is_edited, is_active, is_closable
+    from .TabsWorker import WindowSet, WindowTabs
 
 g_tabLimit = 50
 g_showFullPath = False
 g_selectedItems = 1
 is_debug_enabled = False
-win_tabs = WindowTabs()
+win_set = WindowSet()
+win_tabs = WindowTabs(-1)
 
 
 def plugin_loaded():
@@ -42,27 +47,6 @@ def plugin_loaded():
         sublime.save_settings("Preferences.sublime-settings")
 
 
-def is_preview(view):
-    return sublime.active_window().get_view_index(view)[1] == -1
-
-
-def is_active(view):
-    return view.id() == sublime.active_window().active_view().id()
-
-
-def is_edited(view):
-    return view.is_dirty() or view.is_scratch()
-
-
-def is_closable(view):
-    is_not_closable = is_edited() \
-                    or is_preview(view) \
-                    or is_active(view) \
-                    or view.is_loading()
-
-    return not(is_not_closable)
-
-
 def Logger(function=None, msg="Debug", full=True):
     def LOG(function):
         @wraps(function)
@@ -71,6 +55,7 @@ def Logger(function=None, msg="Debug", full=True):
             if is_debug_enabled:
                 print("======== " + str(msg) + " ========")
                 if full:
+                    print("window id", win_tabs.win_id)
                     print("e_tabs", " ".join(str(v_id) for v_id in win_tabs.edited_tab_ids))
                     print("o_tabs", " ".join(str(v_id) for v_id in win_tabs.opened_tab_ids))
                     print("w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views()))
@@ -88,43 +73,30 @@ def Logger(function=None, msg="Debug", full=True):
 
 
 class ZenTabsListener(sublime_plugin.EventListener):
-    window_id = 0
 
     @Logger(msg="on_close")
     def on_close(self, view):
-        win_tabs.remove_from_list(win_tabs.opened_tab_ids, view.id())
+        win_tabs.remove_from_lists(view.id())
 
     @Logger(msg="on_activated")
     def on_activated(self, view):
-        if sublime.active_window() is not None and sublime.active_window().id() != self.window_id:
-            self.window_id = sublime.active_window().id()
-
-            win_tabs.opened_tab_ids, win_tabs.edited_tab_ids = [], []
-            for view in sublime.active_window().views():
-                if is_edited(view):
-                    win_tabs.renew_list(win_tabs.edited_tab_ids, view.id())
-                else:
-                    win_tabs.renew_list(win_tabs.opened_tab_ids, view.id())
+        global win_tabs
+        if sublime.active_window() is not None and sublime.active_window().id() != win_tabs.win_id:
+            win_tabs = win_set.get_current_window_tab(sublime.active_window())
 
         sublime.set_timeout(lambda: self.process(view.id()), 200)
 
     @Logger(msg="on_post_save")
     def on_post_save(self, view):
-        win_tabs.remove_from_list(win_tabs.edited_tab_ids, view.id())
-        win_tabs.renew_list(win_tabs.opened_tab_ids, view.id())
+        win_tabs.renew_lists(view)
 
     @Logger(msg="on_modified")
     def on_modified(self, view):
-        if view.is_dirty():
-            win_tabs.renew_list(win_tabs.edited_tab_ids, view.id())
-            win_tabs.remove_from_list(win_tabs.opened_tab_ids, view.id())
-        else:
-            win_tabs.renew_list(win_tabs.opened_tab_ids, view.id())
-            win_tabs.remove_from_list(win_tabs.edited_tab_ids, view.id())
+        win_tabs.renew_lists(view)
 
     def process(self, view_id):
         if view_id not in win_tabs.edited_tab_ids:
-            win_tabs.renew_list(win_tabs.opened_tab_ids, view_id)
+            win_tabs.renew_opened_list(view_id)
         if len(sublime.active_window().views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
             self.close_last_tab()
 
@@ -134,14 +106,14 @@ class ZenTabsListener(sublime_plugin.EventListener):
         while len(active_window.views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
             view_id = win_tabs.opened_tab_ids[index]
             view = win_tabs.get_view_by_id(view_id)
-            win_tabs.remove_from_list(win_tabs.opened_tab_ids, view_id)
 
-            if view:
-                if not view.is_dirty() and not view.is_scratch():
+            if view and is_closable(view):
+                win_tabs.remove_from_opened_list(win_tabs.opened_tab_ids, view_id)
+                if is_edited(view):
                     active_window.focus_view(view)
                     active_window.run_command('close')
                 else:
-                    win_tabs.edited_tab_ids.append(view_id)
+                    win_tabs.renew_modifyed_list(view_id)
 
             if index < len(win_tabs.opened_tab_ids):
                 index += 1
@@ -151,6 +123,48 @@ class ZenTabsListener(sublime_plugin.EventListener):
     def set_tabs_visibility(self):
         if len(sublime.active_window().views()) == 1:
             sublime.active_window().run_command('toggle_tabs')
+
+
+class ZenTabsFavoritsCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        real_theme = sublime.active_window().active_view().settings().get('color_scheme')
+        theme = os.path.join("..", "..", real_theme)
+        print(theme)
+        dir_name = os.path.join(os.path.dirname(theme))
+        file_name = "#fav#" + os.path.basename(theme)
+        fav_theme = os.path.join(dir_name, file_name)
+
+        print(file_name)
+        print(dir_name)
+        print(os.getcwd())
+
+        shutil.copy(theme, fav_theme)
+
+        my_file = open(fav_theme, "r")
+        lines_of_file = my_file.readlines()
+        for index, line in enumerate(lines_of_file):
+            if line.find("background") != -1:
+                bg_color_line = lines_of_file[index+1]
+                lines_of_file.remove(bg_color_line)
+                m = re.match(r".*<string>(#.+)</string>.*", bg_color_line)
+                hex_color = m.group(1)
+                rgb_hex = [hex_color[x:x+2] for x in [1, 3, 5]]
+                new_rgb_int = [int(hex_value, 16) + 5 for hex_value in rgb_hex]
+                # make sure new values are between 0 and 255
+                new_rgb_int = [min([255, max([0, i])]) for i in new_rgb_int]
+                # hex() produces "0x88", we want just "88"
+                hex_color = "#%02x%02x%02x" % tuple(new_rgb_int)
+                print(new_rgb_int)
+                print(hex_color)
+                lines_of_file.insert(index+1, "<string>" + hex_color + "</string>\n")
+                break
+
+        fav_file = open(fav_theme, "w")
+        fav_file.write("".join(lines_of_file))
+        fav_file.close()
+
+        # sublime.active_window().active_view().settings().set('color_scheme',
+        #     os.path.join(os.path.dirname(real_theme), file_name))
 
 
 class ZenTabsReloadCommand(sublime_plugin.TextCommand):
@@ -178,7 +192,7 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
-            is_current = self.window.get_view_index(self.active_view) == self.window.get_view_index(view)
+            is_current = is_active(view)
             is_draft = view.file_name() is None
 
             if is_draft:
