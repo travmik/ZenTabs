@@ -16,9 +16,9 @@ def sublime_text_3():
 
 if not sublime_text_3():
     from TabsWorker import WindowTabs
-    sublime.run_command('zen_tabs_reload')
 else:
     from .TabsWorker import WindowTabs
+
 
 g_tabLimit = 50
 g_showFullPath = False
@@ -40,6 +40,13 @@ def plugin_loaded():
         global_settings = sublime.load_settings("Preferences.sublime-settings")
         global_settings.set("highlight_modified_tabs", highlight_modified_tabs)
         sublime.save_settings("Preferences.sublime-settings")
+    print("Limit: " + str(g_tabLimit))
+    print("Full path: " + str(g_showFullPath))
+    print("Highlight: " + str(highlight_modified_tabs))
+
+
+if not sublime_text_3():
+    plugin_loaded()
 
 
 def is_preview(view):
