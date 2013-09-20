@@ -32,13 +32,19 @@ class WindowTabs(object):
         if view_id not in self.edited_tab_ids:
             self.renew_list(self.opened_tab_ids, view_id)
 
-    def renew_lists(self, view):
+    def renew_on_modify(self, view):
         if view.is_dirty():
             self.renew_modifyed_list(view.id())
             self.remove_from_list(self.opened_tab_ids, view.id())
         else:
             self.renew_opened_list(view.id())
             self.remove_from_list(self.edited_tab_ids, view.id())
+
+    def renew_on_activate(self, view_id):
+        if view_id not in self.edited_tab_ids:
+            self.renew_opened_list(view_id)
+        else:
+            self.renew_modifyed_list(view_id)
 
     def remove_from_lists(self, view_id):
         if view_id in self.opened_tab_ids:
@@ -75,6 +81,33 @@ class WindowTabs(object):
                     view = v
                     break
         return view
+
+    def get_closable_tabs_count(self):
+        return len(self.opened_tab_ids)
+
+    def close_tabs_if_needed(self, g_tabLimit):
+        index = 0
+        active_window = sublime.active_window()
+        while self.get_closable_tabs_count() > g_tabLimit:
+            view_id = self.opened_tab_ids[index]
+            view = self.get_view_by_id(view_id)
+
+            if view is None:
+                self.remove_from_lists(view_id)
+                continue
+
+            if is_closable(view):
+                self.remove_from_opened_list(view_id)
+                if not is_edited(view):
+                    active_window.focus_view(view)
+                    active_window.run_command('close')
+                else:
+                    self.renew_modifyed_list(view_id)
+
+            if index < len(self.opened_tab_ids):
+                index += 1
+            else:
+                break
 
 
 class WindowSet(object):

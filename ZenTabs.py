@@ -17,11 +17,11 @@ def sublime_text_3():
         return sys.hexversion >= 0x030000F0
 
 if not sublime_text_3():
-    from TabsWorker import is_edited, is_active, is_closable
+    from TabsWorker import is_active
     from TabsWorker import WindowSet, WindowTabs
     sublime.run_command('zen_tabs_reload')
 else:
-    from .TabsWorker import is_edited, is_active, is_closable
+    from .TabsWorker import is_active
     from .TabsWorker import WindowSet, WindowTabs
 
 g_tabLimit = 50
@@ -88,37 +88,15 @@ class ZenTabsListener(sublime_plugin.EventListener):
 
     @Logger(msg="on_post_save")
     def on_post_save(self, view):
-        win_tabs.renew_lists(view)
+        win_tabs.renew_on_modify(view)
 
     @Logger(msg="on_modified")
     def on_modified(self, view):
-        win_tabs.renew_lists(view)
+        win_tabs.renew_on_modify(view)
 
     def process(self, view_id):
-        if view_id not in win_tabs.edited_tab_ids:
-            win_tabs.renew_opened_list(view_id)
-        if len(sublime.active_window().views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
-            self.close_last_tab()
-
-    def close_last_tab(self):
-        index = 0
-        active_window = sublime.active_window()
-        while len(active_window.views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
-            view_id = win_tabs.opened_tab_ids[index]
-            view = win_tabs.get_view_by_id(view_id)
-
-            if view and is_closable(view):
-                win_tabs.remove_from_opened_list(win_tabs.opened_tab_ids, view_id)
-                if is_edited(view):
-                    active_window.focus_view(view)
-                    active_window.run_command('close')
-                else:
-                    win_tabs.renew_modifyed_list(view_id)
-
-            if index < len(win_tabs.opened_tab_ids):
-                index += 1
-            else:
-                break
+        win_tabs.renew_on_activate(view_id)
+        win_tabs.close_tabs_if_needed(g_tabLimit)
 
     def set_tabs_visibility(self):
         if len(sublime.active_window().views()) == 1:
@@ -127,6 +105,9 @@ class ZenTabsListener(sublime_plugin.EventListener):
 
 class ZenTabsFavoritsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        pass
+
+    def run_1(self, edit):
         real_theme = sublime.active_window().active_view().settings().get('color_scheme')
         theme = os.path.join("..", "..", real_theme)
         print(theme)
@@ -192,6 +173,10 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
+            if view is None:
+                win_tabs.remove_from_lists(view_id)
+                break
+
             is_current = is_active(view)
             is_draft = view.file_name() is None
 
