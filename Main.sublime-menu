@@ -23,7 +23,7 @@
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/Zen Tabs/Default.sublime-settings"},
+                                "args": {"file": "${packages}/Zen Tabs/ZenTabs.sublime-settings"},
                                 "caption": "Settings – Default"
                             },
                             {
