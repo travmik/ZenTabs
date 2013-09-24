@@ -134,9 +134,9 @@ class ZenTabsListener(sublime_plugin.EventListener):
         if view_id not in win_tabs.edited_tab_ids:
             win_tabs.renew_list(win_tabs.opened_tab_ids, view_id)
         if len(sublime.active_window().views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
-            self.close_last_tab()
+            self.close_last_tab(view_id)
 
-    def close_last_tab(self):
+    def close_last_tab(self, active_view_id):
         index = 0
         active_window = sublime.active_window()
         while len(active_window.views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
@@ -148,6 +148,8 @@ class ZenTabsListener(sublime_plugin.EventListener):
                 if not view.is_dirty() and not view.is_scratch():
                     active_window.focus_view(view)
                     active_window.run_command('close')
+                    if win_tabs.get_view_by_id(active_view_id):
+                        active_window.focus_view(win_tabs.get_view_by_id(active_view_id))
                 else:
                     win_tabs.edited_tab_ids.append(view_id)
 
