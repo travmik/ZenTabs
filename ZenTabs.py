@@ -88,7 +88,7 @@ class ZenTabsListener(sublime_plugin.EventListener):
     @Logger(msg="on_activated")
     def on_activated(self, view):
         global win_tabs
-        if sublime.active_window() is not None and sublime.active_window().id() != win_tabs.win_id:
+        if sublime.active_window() and sublime.active_window().id() != win_tabs.win_id:
             win_tabs = win_set.get_current_window_tab(sublime.active_window())
 
         sublime.set_timeout(lambda: self.process(view.id()), 200)
@@ -180,7 +180,7 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
     def prepare_lists(self, view_ids):
         for view_id in view_ids:
             view = win_tabs.get_view_by_id(view_id)
-            if view is None:
+            if not view:
                 win_tabs.remove_from_lists(view_id)
                 break
 
@@ -197,7 +197,7 @@ class SwitchTabsCommand(sublime_plugin.TextCommand):
 
             if is_current:
                 name += "\t^"  # current
-            if view.file_name() is None or view.is_dirty():
+            if not view.file_name() or view.is_dirty():
                 name += "\t*"  # unsaved
             if view.is_read_only():
                 name += "\t#"  # read only

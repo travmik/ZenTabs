@@ -14,11 +14,11 @@ def is_active(view):
 
 
 def is_closable(view):
-    is_not_closable = is_edited() \
+    is_not_closable = is_edited(view) \
                     or is_preview(view) \
                     or is_active(view) \
                     or view.is_loading()
-    return not(is_not_closable)
+    return not is_not_closable
 
 
 class WindowTabs(object):
@@ -66,7 +66,7 @@ class WindowTabs(object):
         self.renew_list(self.edited_tab_ids, view_id)
 
     def renew_list(self, p_list, view_id):
-        if self.get_view_by_id(view_id) is not None:
+        if self.get_view_by_id(view_id):
             if view_id in p_list:
                 p_list.append(p_list.pop(p_list.index(view_id)))
             else:
@@ -75,7 +75,7 @@ class WindowTabs(object):
     def get_view_by_id(self, view_id):
         view = None
         window = sublime.active_window()
-        if window is not None:
+        if window:
             for v in sublime.active_window().views():
                 if v.id() == view_id:
                     view = v
@@ -92,7 +92,7 @@ class WindowTabs(object):
             view_id = self.opened_tab_ids[index]
             view = self.get_view_by_id(view_id)
 
-            if view is None:
+            if not view:
                 self.remove_from_lists(view_id)
                 continue
 
