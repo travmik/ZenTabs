@@ -47,10 +47,9 @@ class WindowTabs(object):
             self.renew_modifyed_list(view_id)
 
     def remove_from_lists(self, view_id):
-        if view_id in self.opened_tab_ids:
-            self.opened_tab_ids.remove(view_id)
-        if view_id in self.edited_tab_ids:
-            self.edited_tab_ids.remove(view_id)
+        self.remove_from_list(self.opened_tab_ids, view_id)
+        self.remove_from_list(self.edited_tab_ids, view_id)
+        self.remove_from_list(self.favorited_tab_ids, view_id)
 
     def remove_from_opened_list(self, view_id):
         self.remove_from_list(self.opened_tab_ids, view_id)
@@ -108,6 +107,12 @@ class WindowTabs(object):
                 index += 1
             else:
                 break
+
+    def toggle_fav_list(self, view_id):
+        if view_id in self.favorited_tab_ids:
+            self.favorited_tab_ids.remove(view_id)
+        else:
+            self.renew_list(self.favorited_tab_ids, view_id)
 
 
 class WindowSet(object):

@@ -65,6 +65,7 @@ def Logger(function=None, msg="Debug", full=True):
                     print("window id", win_tabs.win_id)
                     print("e_tabs", " ".join(str(v_id) for v_id in win_tabs.edited_tab_ids))
                     print("o_tabs", " ".join(str(v_id) for v_id in win_tabs.opened_tab_ids))
+                    print("f_tabs", " ".join(str(v_id) for v_id in win_tabs.favorited_tab_ids))
                     print("w_tabs", " ".join(str(v.id()) for v in sublime.active_window().views()))
             return responce
 
@@ -74,7 +75,6 @@ def Logger(function=None, msg="Debug", full=True):
         def waiting_for_func(function):
             return LOG(function)
         return waiting_for_func
-
     else:
         return LOG(function)
 
@@ -112,7 +112,7 @@ class ZenTabsListener(sublime_plugin.EventListener):
 
 class ZenTabsFavoritsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        pass
+        win_tabs.toggle_fav_list(sublime.active_window().active_view().id())
 
     def run_1(self, edit):
         real_theme = sublime.active_window().active_view().settings().get('color_scheme')
