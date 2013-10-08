@@ -51,7 +51,8 @@ def plugin_loaded():
 
 
 if not sublime_text_3():
-    plugin_loaded()
+    # because of plugin loaded earlier than preferences
+    sublime.set_timeout(lambda: plugin_loaded(), 500)
 
 
 def Logger(function=None, msg="Debug", full=True):
