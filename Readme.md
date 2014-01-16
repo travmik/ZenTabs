@@ -14,7 +14,7 @@ You have to do nothing for this. You just need to install this package, set open
 When you will open 11th tab the oldest one will be closed. And don't worry __it will never close any tab with unsaved work__. If you have nothing but tabs with unsaved work, it will just ignore the limit and create a new tab anyway.
 
 ## Installation
-To install this plugin, you have two options:  
+To install this plugin, you have three options:  
 1. If you have [Sublime Package Control](http://wbond.net/sublime_packages/package_control) installed, simply search for `Zen Tabs` to install.  
 2. Clone source code to Sublime Text packages folder *Sublime Text 2/Packages*.  
 3. Download archive with the latest [release](https://github.com/travmik/ZenTabs/releases) and unpack it to Sublime Text packages folder *Sublime Text 2/Packages*.  
