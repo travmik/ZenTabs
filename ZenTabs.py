@@ -134,11 +134,12 @@ class ZenTabsListener(sublime_plugin.EventListener):
         if view_id not in win_tabs.edited_tab_ids:
             win_tabs.renew_list(win_tabs.opened_tab_ids, view_id)
         if len(sublime.active_window().views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
-            self.close_last_tab(view_id)
+            self.close_last_tab()
 
-    def close_last_tab(self, active_view_id):
+    def close_last_tab(self):
         index = 0
         active_window = sublime.active_window()
+        active_view_id = sublime.active_window().active_view().id()
         while len(active_window.views()) - len(win_tabs.edited_tab_ids) > g_tabLimit:
             view_id = win_tabs.opened_tab_ids[index]
             view = win_tabs.get_view_by_id(view_id)
