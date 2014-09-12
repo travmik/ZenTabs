@@ -104,7 +104,7 @@ class ZenTabsListener(sublime_plugin.EventListener):
 
     def process(self, view_id):
         win_tabs.renew_on_activate(view_id)
-        win_tabs.close_tabs_if_needed(g_tabLimit)
+        win_tabs.close_tabs_if_needed(g_tabLimit, view_id)
 
     def set_tabs_visibility(self):
         if len(sublime.active_window().views()) == 1:

@@ -84,7 +84,7 @@ class WindowTabs(object):
     def get_closable_tabs_count(self):
         return len(self.opened_tab_ids)
 
-    def close_tabs_if_needed(self, g_tabLimit):
+    def close_tabs_if_needed(self, g_tabLimit, active_view_id):
         index = 0
         active_window = sublime.active_window()
         while self.get_closable_tabs_count() > g_tabLimit:
@@ -97,13 +97,12 @@ class WindowTabs(object):
 
             if is_closable(view):
                 self.remove_from_opened_list(view_id)
-                if not is_edited(view):
-                    active_window.focus_view(view)
-                    active_window.run_command('close')
-                else:
-                    self.renew_modifyed_list(view_id)
+                active_window.focus_view(view)
+                active_window.run_command('close')
+                if self.get_view_by_id(active_view_id):
+                    active_window.focus_view(self.get_view_by_id(active_view_id))
 
-            if index < len(self.opened_tab_ids):
+            if index < self.get_closable_tabs_count():
                 index += 1
             else:
                 break
